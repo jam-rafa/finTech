@@ -1,30 +1,22 @@
 const express = require("express");
+const routes = require("./src/routes");
+const cors = require("cors");
+
 const app = express();
-const port = 5000;
-const XLSX = require("xlsx");
-const path = require("path");
 
-// Endpoint para converter todas as abas da planilha para JSON
-app.get("/planilha", (req, res) => {
-  const filePath = path.join(__dirname, "NA PRAIA.xlsx");
+const corsOptions = {
+  origin: "http://localhost:3000", // Replace with your frontend's URL
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
 
-  try {
-    const workbook = XLSX.readFile(filePath);
-    const sheetNames = workbook.SheetNames;
-    const data = {};
+app.use(cors(corsOptions));
 
-    sheetNames.forEach((sheetName) => {
-      const worksheet = workbook.Sheets[sheetName];
-      data[sheetName] = XLSX.utils.sheet_to_json(worksheet);
-    });
+const porta = process.env.porta || 5000;
 
-    res.json(data);
-  } catch (error) {
-    res.status(500).send("Erro ao processar a planilha: " + error);
-  }
-});
+routes(app);
 
-// Iniciar o servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
-});
+app.listen(porta, () => console.log(`servidor rodando porta ${porta}`));
+
+module.exports = app;
