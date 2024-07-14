@@ -6,7 +6,7 @@ const path = require("path");
 
 // Endpoint para converter todas as abas da planilha para JSON
 app.get("/planilha", (req, res) => {
-  const filePath = path.join(__dirname, "NA PRAIA.xlsx");
+  const filePath = path.join(__dirname, "ARENA 61.xlsx");
 
   try {
     const workbook = XLSX.readFile(filePath);
