@@ -3,7 +3,7 @@ const mockData = require('../../../mockData');
 
 const getMonthChart = async (req, res) => {
   try {
-    // Função para calcular entradas, saídas e balanço
+    // Função para calcular entradas, débitos e balanço
     const calculateMonthlyBalances = (data) => {
       const balances = {};
 
@@ -17,9 +17,9 @@ const getMonthChart = async (req, res) => {
         if (entry['Tipo Pagamento'] === 'Entrada') {
           balances[month].entradas += entry.valor;
           balances[month].saldo += entry.valor; // Atualiza o saldo com o valor da entrada
-        } else if (entry['Tipo Pagamento'] === 'Saída') {
+        } else if (entry['Tipo Pagamento'] === 'débito') {
           balances[month].saidas += entry.valor;
-          balances[month].saldo -= entry.valor; // Atualiza o saldo com o valor da saída
+          balances[month].saldo -= entry.valor; // Atualiza o saldo com o valor da débito
         }
       });
 
