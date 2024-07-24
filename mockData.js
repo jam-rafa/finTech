@@ -289,6 +289,44 @@ const mockData = [
     "Forma de Pagamento": "Pix",
     valor: 1450.00,
   },
+
+  {
+    Id: 26,
+    "Nome Pessoa": "mirilla",
+    "Cargo Pessoa": "cliente",
+    "Centro de Custo": "Restaurante",
+    "Tipo Pagamento": "Entrada",
+    Produto: "camarao intenacional",
+    Data: "2024-06-06",
+    "Forma de Pagamento": "Pix",
+    valor: 3000,
+  },
+
+  {
+    Id: 26,
+    "Nome Pessoa": "Marcia Rejane",
+    "Cargo Pessoa": "cliente",
+    "Centro de Custo": "Consessionaria",
+    "Tipo Pagamento": "Entrada",
+    Produto: "BYD - Dolphing",
+    Data: "2024-07-20",
+    "Forma de Pagamento": "Pix",
+    valor: 2000,
+  },
+
+  {
+    Id: 26,
+    "Nome Pessoa": "Rafael",
+    "Cargo Pessoa": "cliente",
+    "Centro de Custo": "Consessionaria",
+    "Tipo Pagamento": "Entrada",
+    Produto: "BYD - Dolphing",
+    Data: "2024-07-20",
+    "Forma de Pagamento": "Pix",
+    valor: 2000,
+  },
+
+
 ];
 
 module.exports = mockData;

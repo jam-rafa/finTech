@@ -3,9 +3,10 @@ const getSectorChat = require("./sections");
 const getProfitProducts = require("./profitproducts");
 const getLossProducts = require("./loosProducts");
 const getBalance = require("./totalBalance");
+const getMedia = require("./media");
 
 class DashBoardController {
-
+  
   static async getBalance(req, res){
     return getBalance(req, res)
   }
@@ -24,6 +25,10 @@ class DashBoardController {
 
   static async getLossProducts(req, res){
     return getLossProducts(req, res)
+  }
+
+  static async getMedia(req, res){
+    return getMedia(req, res)
   }
 
 }

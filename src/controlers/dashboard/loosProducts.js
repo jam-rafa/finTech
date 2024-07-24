@@ -1,13 +1,14 @@
-const mockData = require('../../../mockData');
+const { getXlsData } = require('../../../store/dataStore');
 
 const getLossProducts = async (req, res) => {
   try {
     // Filtrar apenas as entradas
-    const entradas = mockData.filter(item => item["Tipo Pagamento"].toLowerCase() === "débito");
+    const saidas = getXlsData().filter(item => item["C/D"].toLowerCase() === "débito");
+
 
     // Calcular o lucro e a quantidade por produto e setor
-    const lucroPorProduto = entradas.reduce((acc, curr) => {
-      const { Produto, valor, "Centro de Custo": setor } = curr;
+    const lucroPorProduto = saidas.reduce((acc, curr) => {
+      const { "NATUREZA": Produto, "VALOR": valor, "CENTRO DE CUSTO": setor } = curr;      
       if (!acc[Produto]) {
         acc[Produto] = { lucro: 0, quantidade: 0, setor };
       }

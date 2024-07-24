@@ -1,17 +1,18 @@
 const mockData = require('../../../mockData');
+const { getXlsData } = require('../../../store/dataStore');
 
 const getSectorChat = async (req, res) => {
   try {
     // Filtrar apenas os dados de entrada
-    const entradaData = mockData.filter(item => item['Tipo Pagamento'] === 'Entrada');
+    const entradaData = getXlsData().filter(item => item['C/D'].toLowerCase() === 'crédito');
 
     // Agrupar os dados pelo Centro de Custo e calcular o total arrecadado
     const totalArrecadadoPorCentro = entradaData.reduce((acc, curr) => {
-      const centroDeCusto = curr['Centro de Custo'];
+      const centroDeCusto = curr['CENTRO DE CUSTO'];
       if (!acc[centroDeCusto]) {
         acc[centroDeCusto] = 0;
       }
-      acc[centroDeCusto] += curr.valor;
+      acc[centroDeCusto] += curr["VALOR"];
       return acc;
     }, {});
 
