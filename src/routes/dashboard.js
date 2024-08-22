@@ -8,6 +8,8 @@ router.get("/profit-products", DashBoardController.getProfitProducts);
 router.get("/loss-products", DashBoardController.getLossProducts);
 router.get("/balance", DashBoardController.getBalance);
 router.get('/media', DashBoardController.getMedia)
+router.get('/costs', DashBoardController.getCosts)
+
 
 
 
