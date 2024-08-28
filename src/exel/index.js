@@ -13,7 +13,6 @@ function convertCurrencyStringToNumber(currencyString) {
 }
 
 const readXlsData = (filePath) => {
-    console.log(filePath);
     try {
         const workbook = XLSX.readFile(filePath);
         const sheetNames = workbook.SheetNames;
@@ -25,12 +24,13 @@ const readXlsData = (filePath) => {
         });
     
         // Converter datas e valores no JSON
-        const sheetData = data['RELATORIO'];
+        const sheetData = data['BASE'];
         sheetData.forEach(row => {
             for (let key in row) {
-                if (typeof row[key] === 'number' && row[key] > 40000) { // Supondo que datas serão números grandes
+                if (key === 'DATA') { // Supondo que datas serão números grandes
                     row[key] = excelDateToJSDate(row[key]);
                 } else if (typeof row[key] === 'string' && row[key].includes('R$')) { // Supondo que valores monetários incluem 'R$'
+                    console.log(row)
                     row[key] = convertCurrencyStringToNumber(row[key]);
                 }
             }
@@ -44,7 +44,7 @@ const readXlsData = (filePath) => {
 };
 
 const requestXlsData = () => {
-  const filePath = path.join(__dirname, 'ARENA.xlsx');
+  const filePath = path.join(__dirname, 'Pasta.xlsx');
   return readXlsData(filePath);
 };
 

@@ -1,14 +1,31 @@
+const moment = require('moment');
 const { getXlsData } = require('../../../store/dataStore');
 
 const getLossProducts = async (req, res) => {
   try {
-    // Filtrar apenas as entradas
-    const saidas = getXlsData().filter(item => item["C/D"].toLowerCase() === "débito");
+    // Obtém o parâmetro de data do query string
+    const dateParam = (req.query.date || "").replace(/"/g, '');
 
+    // Obtém os dados do arquivo Excel (ou outra fonte)
+    let data = getXlsData();
+
+    // Filtra os dados se dateParam estiver presente
+    if (dateParam) {
+      const startOfMonth = moment(dateParam, 'YYYY-MM').startOf('month').format('YYYY-MM-DD');
+      const endOfMonth = moment(dateParam, 'YYYY-MM').endOf('month').format('YYYY-MM-DD');
+      
+      data = data.filter(item => {
+        const itemDate = moment(item.DATA).format('YYYY-MM-DD');
+        return itemDate >= startOfMonth && itemDate <= endOfMonth;
+      });
+    }
+
+    // Filtrar apenas as entradas de débito
+    const saidas = data.filter(item => item["C/D"] === "Débito");
 
     // Calcular o lucro e a quantidade por produto e setor
     const lucroPorProduto = saidas.reduce((acc, curr) => {
-      const { "NATUREZA": Produto, "VALOR": valor, "CENTRO DE CUSTO": setor } = curr;      
+      const { "NATUREZA": Produto, "VALOR": valor, "CENTRO DE CUSTO": setor } = curr;
       if (!acc[Produto]) {
         acc[Produto] = { lucro: 0, quantidade: 0, setor };
       }
@@ -20,7 +37,7 @@ const getLossProducts = async (req, res) => {
     // Ordenar os produtos pelo lucro em ordem decrescente
     const produtosOrdenados = Object.entries(lucroPorProduto)
       .sort((a, b) => b[1].lucro - a[1].lucro)
-      .slice(0, 6);
+      .slice(0, 10);
 
     // Calcular o valor total de lucro
     const valorTotalLucro = produtosOrdenados.reduce((acc, [, { lucro }]) => acc + lucro, 0);
@@ -38,8 +55,8 @@ const getLossProducts = async (req, res) => {
 
     // Enviar a resposta
     res.json(response);
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao processar os dados' });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
 };
 

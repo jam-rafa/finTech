@@ -3,8 +3,23 @@ const { getXlsData } = require('../../../store/dataStore');
 
 const getCosts = async (req, res) => {
   try {
+    // Obtém o parâmetro de data do query string
+    const dateParam = (req.query.date || "").replace(/"/g, '');
+    console.log(dateParam, 'param');
+
     // Recuperar os dados do XLS
-    const data = await getXlsData();
+    let data = await getXlsData();
+
+    // Filtra os dados se dateParam estiver presente
+    if (dateParam) {
+      const startOfMonth = moment(dateParam, 'YYYY-MM').startOf('month').format('YYYY-MM-DD');
+      const endOfMonth = moment(dateParam, 'YYYY-MM').endOf('month').format('YYYY-MM-DD');
+      
+      data = data.filter(item => {
+        const itemDate = moment(item.DATA).format('YYYY-MM-DD');
+        return itemDate >= startOfMonth && itemDate <= endOfMonth;
+      });
+    }
 
     // Inicializar os totais de custos
     const totais = {
