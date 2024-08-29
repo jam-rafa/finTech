@@ -24,7 +24,7 @@ const readXlsData = (filePath) => {
         });
     
         // Converter datas e valores no JSON
-        const sheetData = data['BASE'];
+        const sheetData = data['BASE '];
         sheetData.forEach(row => {
             for (let key in row) {
                 if (key === 'DATA') { // Supondo que datas serão números grandes
@@ -44,7 +44,7 @@ const readXlsData = (filePath) => {
 };
 
 const requestXlsData = () => {
-  const filePath = path.join(__dirname, 'Pasta.xlsx');
+  const filePath = path.join(__dirname, 'ARENA 61.xlsx');
   return readXlsData(filePath);
 };
 
