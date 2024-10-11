@@ -5,7 +5,6 @@ const getProfitProducts = async (req, res) => {
   try {
     // Obtém o parâmetro de data do query string
     const dateParam = (req.query.date || "").replace(/"/g, '');
-    console.log(dateParam, 'param profit');
 
     // Obtém os dados do arquivo Excel (ou outra fonte)
     let data = getXlsData();

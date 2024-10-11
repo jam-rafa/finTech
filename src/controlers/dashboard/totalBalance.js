@@ -25,7 +25,6 @@ const getBalance = async (req, res) => {
 
     filterData.forEach((entry) => {
       const valor = parseFloat(entry["VALOR"]); // Garante que VALOR é um número
-      // console.log(valor, '--', entry["ID"])
       if (isNaN(valor)) {
         console.warn(`Valor inválido encontrado: ${entry["VALOR"]}`);
         return;

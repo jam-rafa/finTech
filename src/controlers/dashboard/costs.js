@@ -5,7 +5,6 @@ const getCosts = async (req, res) => {
   try {
     // Obtém o parâmetro de data do query string
     const dateParam = (req.query.date || "").replace(/"/g, '');
-    console.log(dateParam, 'param');
 
     // Recuperar os dados do XLS
     let data = await getXlsData();
