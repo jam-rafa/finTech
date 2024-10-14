@@ -1,0 +1,8 @@
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve('./dbConn/config', 'config.json'),
+  'models-path': path.resolve('./dbConn/models'),
+  'seeders-path': path.resolve('./dbConn/seeders'),
+  'migrations-path': path.resolve('./dbConn/migrations'),
+}
